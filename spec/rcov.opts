@@ -1,0 +1,2 @@
+--exclude "spec/*" 
+--aggregate "coverage.data"
