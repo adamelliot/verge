@@ -19,11 +19,6 @@ describe Verge::Server::User do
     Verge::Server::User.authenticate("nobody", "---").should be_nil
   end
 
-  it "creates a token after successful login" do
-    user = Verge::Server::User.authenticate(@user.login, "0rbital")
-    user.tokens.count.should eql(1)
-  end
-  
   it "creates a token with an expiry" do
     expiry = DateTime.now + 100
     @user.generate_token(expiry)
@@ -31,7 +26,7 @@ describe Verge::Server::User do
   end
   
   it "destroys any tokens that belong to it when destroyed" do
-    @user.valid_token
+    @user.token
     @user.destroy
     Verge::Server::Token.count.should eql(0)
   end
@@ -39,16 +34,32 @@ describe Verge::Server::User do
   it "valid token returns an existing token when one's been created" do
     @user.generate_token
     count = @user.tokens.count
-    @user.valid_token
+    @user.token
   
     @user.tokens.count.should eql(count)
   end
   
   it "valid token creates a new token when none exist" do
     count = @user.tokens.count
-    @user.valid_token
+    @user.token
     
     @user.tokens.count.should eql(count + 1)
+  end
+  
+  it "starts out as an inactive user and has an expiry" do
+    @user.activated.should be_false
+    @user.expiry.should >= DateTime.now + 4.minutes
+  end
+  
+  it "will mark the model as activated and remove the expiry" do
+    @user.activate!
+  end
+  
+  it "removes any uses that have expired" do
+    Factory(:user, :expiry => 1.minute.ago)
+    count = Verge::Server::User.count
+    Verge::Server::User.remove_expired_users
+    Verge::Server::User.count.should == (count - 1)
   end
 end
 
@@ -67,8 +78,9 @@ describe Verge::Server::Token do
     Verge::Server::SignedToken.all.destroy!
     Verge::Server::Token.all.destroy!
     Factory(:site)
+    @user = Factory(:user)
 
-    @token = Verge::Server::Token.create(:user_id => 1)
+    @token = Verge::Server::Token.create(:user_id => @user.id)
   end
   
   it "has a valid token" do
@@ -103,17 +115,17 @@ describe Verge::Server::Site do
   end
   
   it "returns valid token after signing token" do
-    @site.sign_token(Verge::Server::User.first.valid_token).value.length.should == 128
+    @site.sign_token(Verge::Server::User.first.token).value.length.should == 128
   end
 
   it "destroys any signed tokens that belong to it when destroyed" do
-    Verge::Server::Token.create(:user_id => 1)
+    Verge::Server::Token.create(:user_id => @user.id)
     @site.signed_tokens.destroy
     Verge::Server::SignedToken.count.should eql(0)
   end
   
   it "signs any tokens that haven't expired when created" do
-    @user.valid_token
+    @user.token
     Verge::Server::SignedToken.count.should eql(Verge::Server::Site.count)
     # Factory(:site) uses create! which will bypass the after hook
     Factory.build(:site).save.should be_true
@@ -128,17 +140,9 @@ describe Verge::Server::Site do
   end
   
   it "should create a valid signed token when signing" do
-    @user.valid_token.should_not be_nil
+    @user.token.should_not be_nil
     Verge::Server::SignedToken.count.should eql(1)
-    signature = Verge::Crypto.digest(@site.signature, @user.valid_token.value)
+    signature = Verge::Crypto.digest(@site.signature, @user.login, @user.token.value)
     Verge::Server::SignedToken.first.value.should == signature
   end
 end
-
-
-
-
-
-
-
-
