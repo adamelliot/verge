@@ -10,8 +10,8 @@ Factory.define(:site, :class => Verge::Server::Site) do |s|
   s.uri { Factory.next(:uri) }
 end
 
-Factory.define(:signed_key, :class => Verge::Server::SignedKey) do |s|
-  s.user_key_id 1
+Factory.define(:signed_token, :class => Verge::Server::SignedToken) do |s|
+  s.token_id 1
   s.site_id 1
   s.value { Verge::Crypto.token }
 end

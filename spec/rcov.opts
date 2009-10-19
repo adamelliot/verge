@@ -1,2 +1,2 @@
---exclude "spec/*" 
---aggregate "coverage.data"
+--exclude "spec/*,/Library/*" 
+-T

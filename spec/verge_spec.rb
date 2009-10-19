@@ -26,12 +26,12 @@ describe Verge do
 
     it 'returns a code when valid' do
       get '/auth', valid_auth_request_for(@user, @site)
-      last_response.body.should == @user.valid_key.value
+      last_response.body.should == @user.valid_token.value
     end
     
     it 'sets a cookie on success' do
       get '/auth', valid_auth_request_for(@user, @site)
-      last_response.headers["Set-Cookie"] = "key=#{@user.valid_key.value}"
+      last_response.headers["Set-Cookie"] = "token=#{@user.valid_token.value}"
     end
   end
 
@@ -39,7 +39,7 @@ describe Verge do
     before :each do
       @user = Factory(:user)
       @site = Factory(:site)
-      @signed_key = @user.valid_key.signed_keys.first
+      @signed_token = @user.valid_token.signed_tokens.first
       
       header("Referer", @site.uri)
     end
@@ -51,14 +51,14 @@ describe Verge do
       last_response.headers["Status"] =~ /401/
     end
     
-    it "fails if key can't be found" do
+    it "fails if token can't be found" do
       get "/verify/anything"
       
       last_response.headers["Status"] =~ /404/
     end
     
-    it "succeeds if the key is valid" do
-      get "/verify/#{@signed_key.value}"
+    it "succeeds if the token is valid" do
+      get "/verify/#{@signed_token.value}"
 
       last_response.headers["Status"] =~ /200/
     end
