@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{verge}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Elliot"]
@@ -34,7 +34,8 @@ Gem::Specification.new do |s|
      "spec/rcov.opts",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/verge_spec.rb"
+     "spec/verge_spec.rb",
+     "verge.gemspec"
   ]
   s.homepage = %q{http://github.com/adamelliot/verge}
   s.rdoc_options = ["--charset=UTF-8"]

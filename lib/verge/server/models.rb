@@ -6,7 +6,6 @@ require 'dm-timestamps'
 
 require 'activesupport'
 
-DataMapper::Logger.new("#{Dir.pwd}/../log/dm.log", :debug)
 DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/../db.sqlite3")
 
 module Verge
