@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{verge}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Elliot"]
@@ -55,33 +55,33 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<sinatra>, [">= 0"])
-      s.add_runtime_dependency(%q<datamapper>, [">= 0"])
-      s.add_runtime_dependency(%q<bcrypt-ruby>, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<factory_girl>, [">= 0"])
-      s.add_development_dependency(%q<rack-test>, [">= 0"])
-      s.add_development_dependency(%q<do_sqlite3>, [">= 0"])
+      s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
+      s.add_runtime_dependency(%q<datamapper>, [">= 0.10.1"])
+      s.add_runtime_dependency(%q<bcrypt-ruby>, [">= 2.1.2"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 2.3.4"])
+      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_development_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_development_dependency(%q<rack-test>, ["= 0.5.0"])
+      s.add_development_dependency(%q<do_sqlite3>, ["= 0.10.0"])
     else
-      s.add_dependency(%q<sinatra>, [">= 0"])
-      s.add_dependency(%q<datamapper>, [">= 0"])
-      s.add_dependency(%q<bcrypt-ruby>, [">= 0"])
-      s.add_dependency(%q<activesupport>, [">= 0"])
-      s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<factory_girl>, [">= 0"])
-      s.add_dependency(%q<rack-test>, [">= 0"])
-      s.add_dependency(%q<do_sqlite3>, [">= 0"])
+      s.add_dependency(%q<sinatra>, [">= 0.9.4"])
+      s.add_dependency(%q<datamapper>, [">= 0.10.1"])
+      s.add_dependency(%q<bcrypt-ruby>, [">= 2.1.2"])
+      s.add_dependency(%q<activesupport>, [">= 2.3.4"])
+      s.add_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_dependency(%q<rack-test>, ["= 0.5.0"])
+      s.add_dependency(%q<do_sqlite3>, ["= 0.10.0"])
     end
   else
-    s.add_dependency(%q<sinatra>, [">= 0"])
-    s.add_dependency(%q<datamapper>, [">= 0"])
-    s.add_dependency(%q<bcrypt-ruby>, [">= 0"])
-    s.add_dependency(%q<activesupport>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<factory_girl>, [">= 0"])
-    s.add_dependency(%q<rack-test>, [">= 0"])
-    s.add_dependency(%q<do_sqlite3>, [">= 0"])
+    s.add_dependency(%q<sinatra>, [">= 0.9.4"])
+    s.add_dependency(%q<datamapper>, [">= 0.10.1"])
+    s.add_dependency(%q<bcrypt-ruby>, [">= 2.1.2"])
+    s.add_dependency(%q<activesupport>, [">= 2.3.4"])
+    s.add_dependency(%q<rspec>, [">= 1.2.9"])
+    s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+    s.add_dependency(%q<rack-test>, ["= 0.5.0"])
+    s.add_dependency(%q<do_sqlite3>, ["= 0.10.0"])
   end
 end
 

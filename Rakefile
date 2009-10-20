@@ -11,13 +11,13 @@ begin
     gem.homepage = "http://github.com/adamelliot/verge"
     gem.authors = ["Adam Elliot"]
     gem.add_dependency "sinatra", ">= 0.9.4"
-    gem.add_dependency "datamapper", ">= 0.10.1"
-    gem.add_dependency "bcrypt-ruby", ">= 2.1.2"
-    gem.add_dependency "activesupport", ">= 2.3.4"
+    gem.add_dependency "datamapper", ">= 0.9.0"
+    gem.add_dependency "bcrypt-ruby", ">= 2.0.0"
+    gem.add_dependency "activesupport", ">= 2.0.0"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "factory_girl", ">= 1.2.3"
     gem.add_development_dependency "rack-test", "0.5.0"
-    gem.add_development_dependency "do_sqlite3", "0.10.0"
+    gem.add_development_dependency "do_sqlite3", "0.9.0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
