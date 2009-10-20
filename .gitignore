@@ -3,6 +3,7 @@
 coverage
 rdoc
 doc/*
+.yardoc
 pkg
 *.sqlite3
 log/*
