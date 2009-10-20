@@ -6,7 +6,7 @@ require 'dm-timestamps'
 
 require 'activesupport'
 
-DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/../db.sqlite3")
+DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/database.sqlite3")
 
 module Verge
   module Server
@@ -105,12 +105,12 @@ module Verge
       include DataMapper::Resource
 
       property :id,         Serial, :key => true
-      property :domain,     String, :length => 3..300
+      property :host,       String, :length => 3..300
       property :signature,  String, :length => 128..128, :default => lambda { Verge::Crypto.token }
 
       has n, :signed_tokens
 
-      validates_is_unique :domain
+      validates_is_unique :host
       validates_is_unique :signature
 
       before :destroy, :destroy_signed_tokens
@@ -127,14 +127,13 @@ module Verge
         signed_tokens.create(:value => sign(token.user.login, token.value), :token => token)
       end
 
-      # Searchs all the sites for ones that match the protocol and domain
+      # Searchs all the sites for ones that match the host
       #   EG:
       #    "http://verge.example.com/some/path?id=1" will match
       #    "verge.example.com"
-      def self.find_by_url(url)
-        return nil if url.nil?
-        domain = url[/^([A-Za-z\d]*(:\/\/)){0,1}([^\/]*)/, 3]
-        Site.first(:domain => domain)
+      def self.find_by_uri(uri)
+        return nil if uri.nil?
+        Site.first(:host => uri[/^([A-Za-z\d]*\:\/\/){0,1}([^\/]*)/, 2])
       end
 
       private

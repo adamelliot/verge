@@ -1,5 +1,5 @@
 Factory.sequence(:login) { |n| "verge-#{n}" }
-Factory.sequence(:domain) { |n| "site-#{n}.com" }
+Factory.sequence(:host) { |n| "site-#{n}.com" }
 
 Factory.define(:user, :class => Verge::Server::User) do |u|
   u.login { Factory.next(:login) }
@@ -7,7 +7,7 @@ Factory.define(:user, :class => Verge::Server::User) do |u|
 end
 
 Factory.define(:site, :class => Verge::Server::Site) do |s|
-  s.domain { Factory.next(:domain) }
+  s.host { Factory.next(:host) }
 end
 
 Factory.define(:signed_token, :class => Verge::Server::SignedToken) do |s|

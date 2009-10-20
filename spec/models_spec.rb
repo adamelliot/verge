@@ -132,11 +132,11 @@ describe Verge::Server::Site do
     Verge::Server::SignedToken.count.should eql(Verge::Server::Site.count)
   end
   
-  it "returns a site when the domain and protocol match" do
+  it "returns a site when the host matches" do
     site1 = Factory(:site)
-    site2 = Verge::Server::Site.find_by_url("http://#{site1.domain}/some/other/path?junk=10&true=false")
+    site2 = Verge::Server::Site.find_by_uri("http://#{site1.host}/some/other/path?junk=10&true=false")
     site2.should_not be_nil
-    site2.domain.should eql(site1.domain)
+    site2.host.should eql(site1.host)
   end
   
   it "should create a valid signed token when signing" do

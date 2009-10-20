@@ -1,5 +1,3 @@
-require 'rubygems'
-
 module Verge
   autoload :Crypto, "verge/crypto"
   

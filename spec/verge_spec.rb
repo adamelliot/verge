@@ -16,7 +16,7 @@ describe Verge::Server do
 
   before :each do
     @site = Factory(:site)
-    header("Referer", @site.domain)
+    header("Referer", @site.host)
   end
   
   describe "GET to /token.js" do
@@ -103,7 +103,7 @@ describe Verge::Server do
       @user = Factory(:user)
       @signed_token = @user.token.signed_tokens.first(:site_id => @site.id)
       
-      header("Referer", @site.domain)
+      header("Referer", @site.host)
     end
  
     it "fails if no regisered site is found" do

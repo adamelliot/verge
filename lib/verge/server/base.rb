@@ -59,7 +59,7 @@ module Verge
       private
 
       def extract_site # nodoc #
-        site = Site.find_by_url(request.referer)
+        site = Site.find_by_uri(request.referer)
         (site.nil? && halt(401, "Not a valid site.")) || site
       end
 
