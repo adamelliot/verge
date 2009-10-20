@@ -1,6 +1,16 @@
+require 'sinatra/base'
+require 'erb'
+
 module Verge
   module Server
     class Base < Sinatra::Base
+      enable :logging
+      set :root, File.dirname(__FILE__)
+      
+      configure :development do
+        enable :dump_errors
+      end
+
       # Request from clients (browers generally) to authenticate with username
       # and password. Returns a token that should be sent back to the site
       # along with the login passed here to be verified by the site
@@ -19,7 +29,7 @@ module Verge
         @token = request.cookies["token"]
         @login = request.cookies["login"]
 
-        erb 'token.js'.to_sym unless @token.blank? || @login.blank?
+        erb 'token.js'.to_sym unless @token.nil? || @token.blank? || @login.nil? || @login.blank?
       end
 
       # Creates user accounts
@@ -46,8 +56,6 @@ module Verge
         halt 404, "Token not found." if signed_token.nil?
       end
       
-      set :views, File.dirname(__FILE__) + '/views'
-
       private
 
       def extract_site # nodoc #

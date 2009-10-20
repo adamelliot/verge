@@ -6,7 +6,7 @@ require 'spec/autorun'
 require 'rack/test'
 require 'factory_girl'
 
-require File.expand_path(File.dirname(__FILE__) + '/factories')
+require File.expand_path(File.dirname(__FILE__)) + '/factories'
 
 Spec::Runner.configure do |config|
   config.include Rack::Test::Methods

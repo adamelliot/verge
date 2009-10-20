@@ -1,17 +1,14 @@
 require 'rubygems'
-require 'sinatra'
-require 'haml'
-require 'erb'
-require 'cgi'
 
-require 'dm-core'
-require 'dm-aggregates'
-require 'dm-validations'
-require 'dm-types'
-require 'dm-timestamps'
+module Verge
+  autoload :Crypto, "verge/crypto"
+  
+  module Server
+    autoload :Base, "verge/server/base"
 
-require 'activesupport'
-
-require File.join(File.dirname(__FILE__), "verge", "crypto")
-require File.join(File.dirname(__FILE__), "verge", "server", "base")
-require File.join(File.dirname(__FILE__), "verge", "server", "models")
+    autoload :User, "verge/server/models"
+    autoload :SignedToken, "verge/server/models"
+    autoload :Token, "verge/server/models"
+    autoload :Site, "verge/server/models"
+  end
+end

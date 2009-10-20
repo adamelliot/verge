@@ -1,6 +1,6 @@
-= verge
+= Verge
 
-Description goes here.
+Lightweight centralized authentications system.
 
 == Note on Patches/Pull Requests
  
