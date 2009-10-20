@@ -14,14 +14,21 @@ module Verge
         set_cookie_for_user(user)
         user.token.value
       end
-      
+
+      get '/token.js' do
+        @token = request.cookies["token"]
+        @login = request.cookies["login"]
+
+        erb 'token.js'.to_sym unless @token.blank? || @login.blank?
+      end
+
       # Creates user accounts
       post '/create' do
         extract_site
-        
+
         user = User.new(:login => params[:login], :password => params[:password])
         halt 400, "Could not create user." unless user.save
-        
+
         # TODO: Make user activation not manditory, for now ther is no activation mechanism
         user.activate!
 
@@ -38,6 +45,8 @@ module Verge
         signed_token = extract_site.signed_tokens.first(:value => token)
         halt 404, "Token not found." if signed_token.nil?
       end
+      
+      set :views, File.dirname(__FILE__) + '/views'
 
       private
 

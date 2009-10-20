@@ -19,7 +19,46 @@ describe Verge::Server do
     header("Referer", @site.uri)
   end
   
-  describe 'authentication' do
+  describe "GET to /token.js" do
+    it "echos cookie back in javascript" do
+      login = "astro"
+      token = "bombastic"
+
+      set_cookie("login=#{login}")
+      set_cookie("token=#{token}")
+
+      get '/token.js'
+      last_response.body.should =~ /#{login}/
+      last_response.body.should =~ /#{token}/
+    end
+    
+    it "echos nothing if no cookies are sent" do
+      get '/token.js'
+      last_response.body.should == ""
+      last_response.should be_ok
+    end
+    
+    it "echos nothing if login is blank" do
+      set_cookie("login=")
+      set_cookie("token=a-token")
+
+      get '/token.js'
+      last_response.body.should == ""
+      last_response.should be_ok
+    end
+
+    it "echos nothing if login is blank" do
+      set_cookie("login=a-login")
+      set_cookie("token=")
+
+      get '/token.js'
+      last_response.body.should == ""
+      last_response.should be_ok
+    end
+  end
+  
+
+  describe 'GET to /auth' do
     before :each do
       @user = Factory(:user)
     end
@@ -40,7 +79,7 @@ describe Verge::Server do
     end
   end
   
-  describe "user creation" do
+  describe "POST to /create" do
     before :each do
       Verge::Server::User.all.destroy!
     end
@@ -59,7 +98,7 @@ describe Verge::Server do
     end
   end
 
-  describe 'token verification' do
+  describe 'GET to /verify/:token' do
     before :each do
       @user = Factory(:user)
       @signed_token = @user.token.signed_tokens.first(:site_id => @site.id)

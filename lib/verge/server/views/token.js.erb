@@ -1,0 +1,29 @@
+(function() {
+  function announceToken() {
+    var login = "<%= @login %>";
+    var token = "<%= @token %>";
+    
+    // For now we'll just write the server's token to the console, in the
+    // future we'll need to actually do something with it.
+    if (console) {
+      console.log("Login: " + login);
+      console.log("Toekn: " + token);
+    }
+  }
+  
+  (function() {
+    if (document.addEventListener) {
+      document.addEventListener("DOMContentLoaded", function() {
+        document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+        announceToken();
+      }, false);
+    } else if (document.attachEvent) {
+      document.attachEvent("onreadystatechange", function() {
+        if (document.readyState == "complete") {
+          document.detachEvent("onreadystatechange", argument.callee);
+          announceToken();
+        }
+      });
+    }
+  })();
+})();
