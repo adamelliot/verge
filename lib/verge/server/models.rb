@@ -98,12 +98,12 @@ module Verge
       include DataMapper::Resource
 
       property :id,         Serial, :key => true
-      property :uri,        String, :length => 12..300
+      property :domain,     String, :length => 3..300
       property :signature,  String, :length => 128..128, :default => lambda { Verge::Crypto.token }
 
       has n, :signed_tokens
 
-      validates_is_unique :uri
+      validates_is_unique :domain
       validates_is_unique :signature
 
       before :destroy, :destroy_signed_tokens
@@ -121,13 +121,13 @@ module Verge
       end
 
       # Searchs all the sites for ones that match the protocol and domain
-      # EG
+      #   EG:
       #    "http://verge.example.com/some/path?id=1" will match
-      #    "http://verge.example.com"
+      #    "verge.example.com"
       def self.find_by_url(url)
         return nil if url.nil?
-        uri = url[/^([A-Za-z\d]*(:\/\/){0,1}[^\/]*)/, 1]
-        Site.first(:uri => uri)
+        domain = url[/^([A-Za-z\d]*(:\/\/)){0,1}([^\/]*)/, 3]
+        Site.first(:domain => domain)
       end
 
       private

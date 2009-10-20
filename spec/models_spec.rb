@@ -123,7 +123,7 @@ describe Verge::Server::Site do
     @site.signed_tokens.destroy
     Verge::Server::SignedToken.count.should eql(0)
   end
-  
+
   it "signs any tokens that haven't expired when created" do
     @user.token
     Verge::Server::SignedToken.count.should eql(Verge::Server::Site.count)
@@ -134,9 +134,9 @@ describe Verge::Server::Site do
   
   it "returns a site when the domain and protocol match" do
     site1 = Factory(:site)
-    site2 = Verge::Server::Site.find_by_url("#{site1.uri}/some/other/path?junk=10&true=false")
+    site2 = Verge::Server::Site.find_by_url("http://#{site1.domain}/some/other/path?junk=10&true=false")
     site2.should_not be_nil
-    site2.uri.should eql(site1.uri)
+    site2.domain.should eql(site1.domain)
   end
   
   it "should create a valid signed token when signing" do
