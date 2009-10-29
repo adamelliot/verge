@@ -45,8 +45,8 @@ module Verge
 
       # Attempts to find a user based on the credentials passed.
       def self.authenticate(login, password)
-        u = User.first(:login => login)
-        (u.nil? || u.password != password) && nil || u
+        user = User.first(:login => login)
+        (user.nil? || user.password != password) && nil || user
       end
 
       # Removes expired users

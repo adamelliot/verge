@@ -9,4 +9,6 @@ module Verge
     autoload :Token, "verge/server/models"
     autoload :Site, "verge/server/models"
   end
+  
+  autoload :Client, "verge/client/base"
 end

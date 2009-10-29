@@ -20,6 +20,9 @@ begin
     gem.add_development_dependency "do_sqlite3", ">= 0.9.0"
   end
   Jeweler::GemcutterTasks.new
+  Jeweler::RubyforgeTasks.new do |rubyforge|
+    rubyforge.doc_task = "yardoc"
+  end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
