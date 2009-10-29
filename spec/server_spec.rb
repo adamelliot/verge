@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 module VergeSpecHelper
-  def valid_auth_request_for_user(user)
-    {:login => user.login, :password => "0rbital"}
+  def valid_auth_request(user, redirect = "", site = "")
+    {:login => user.login, :password => "0rbital", :redirect => redirect, :site => site}
   end
   
   def new_user_credentials_for_site(site)
@@ -31,7 +31,7 @@ describe Verge::Server do
       last_response.body.should =~ /#{login}/
       last_response.body.should =~ /#{token}/
     end
-    
+
     it "echos nothing if no cookies are sent" do
       get '/token.js'
       last_response.body.should == ""
@@ -58,24 +58,38 @@ describe Verge::Server do
   end
   
 
-  describe 'GET to /auth' do
+  describe 'POST to /login' do
     before :each do
       @user = Factory(:user)
     end
 
     it 'fails with empty request' do
-      get '/auth'
+      post '/login'
       last_response.status.should == 401
     end
 
     it 'returns a code when valid' do
-      get '/auth', valid_auth_request_for_user(@user)
-      last_response.body.should == @user.token.value
+      post '/login', valid_auth_request(@user)
+      last_response.body.should == "token=#{@user.token.value}"
     end
     
     it 'sets a cookie on success' do
-      get '/auth', valid_auth_request_for_user(@user)
+      post '/login', valid_auth_request(@user)
       last_response.headers["Set-Cookie"].should == "token=#{@user.token.value}; path=/"
+    end
+    
+    it 'redirects to the desired target with the token' do
+      post '/login', valid_auth_request(@user, "http://example.com")
+
+      last_response.status.should == 302
+      last_response.headers["Location"].should == "http://example.com?token=#{@user.token.value}"
+    end
+
+    it 'redirects to the desired target with the token and detects other url params' do
+      post '/login', valid_auth_request(@user, "http://example.com?snowball=cat")
+
+      last_response.status.should == 302
+      last_response.headers["Location"].should == "http://example.com?snowball=cat&token=#{@user.token.value}"
     end
   end
   

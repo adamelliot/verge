@@ -15,14 +15,23 @@ module Verge
       # and password. Returns a token that should be sent back to the site
       # along with the login passed here to be verified by the site
       # as allowed to login.
-      get '/auth' do
+      post '/login' do
         extract_site
 
         user = User.authenticate(params[:login], params[:password])
         halt 401, "Bad user." if user.nil?
 
         set_cookie_for_user(user)
-        user.token.value
+        
+        result = {:token => user.token.value}
+        target = params[:redirect]
+
+        if target.nil? || target.blank?
+          # TODO: Add formatters for XML, JSON and Standard params
+          result.to_params
+        else
+          redirect(params[:redirect] + (target.index("?").nil? ? "?" : "&") + result.to_params)
+        end
       end
 
       get '/token.js' do

@@ -15,14 +15,14 @@ begin
     gem.add_dependency "bcrypt-ruby", ">= 2.0.5"
     gem.add_dependency "activesupport", ">= 2.3.4"
     gem.add_development_dependency "rspec", ">= 1.2.9"
-    gem.add_development_dependency "factory_girl", ">= 1.2.3"
+    gem.add_development_dependency "factory_girl"
     gem.add_development_dependency "rack-test", ">= 0.5.0"
     gem.add_development_dependency "do_sqlite3", ">= 0.9.0"
   end
   Jeweler::GemcutterTasks.new
-  Jeweler::RubyforgeTasks.new do |rubyforge|
-    rubyforge.doc_task = "yardoc"
-  end
+#  Jeweler::RubyforgeTasks.new do |rubyforge|
+#    rubyforge.doc_task = "yardoc"
+#  end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
