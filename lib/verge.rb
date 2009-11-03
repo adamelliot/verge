@@ -3,6 +3,9 @@ module Verge
   
   module Server
     autoload :Base, "verge/server/base"
+    
+    autoload :Config, "verge/server/config"
+    autoload :Exec, "verge/server/exec"
 
     autoload :User, "verge/server/models"
     autoload :SignedToken, "verge/server/models"
@@ -10,5 +13,5 @@ module Verge
     autoload :Site, "verge/server/models"
   end
   
-  autoload :Client, "verge/client/base"
+  autoload :Client, "verge/client"
 end

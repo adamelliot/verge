@@ -67,17 +67,17 @@ module Verge
       
       private
 
-      def extract_site # nodoc #
-        site = Site.find_by_uri(request.referer)
-        (site.nil? && halt(401, "Not a valid site.")) || site
-      end
+        def extract_site # nodoc #
+          site = Site.find_by_uri(request.referer)
+          (site.nil? && halt(401, "Not a valid site.")) || site
+        end
 
-      def set_cookie_for_user(user) # nodoc #
-        response.set_cookie("token", {
-          :value => user.token.value,
-          :path => '/'
-        })
-      end
+        def set_cookie_for_user(user) # nodoc #
+          response.set_cookie("token", {
+            :value => user.token.value,
+            :path => '/'
+          })
+        end
     end
   end
 end

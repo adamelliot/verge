@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module VergeSpecHelper
+module ServerSpecHelper
   def valid_auth_request(user, redirect = "", site = "")
     {:login => user.login, :password => "0rbital", :redirect => redirect, :site => site}
   end
@@ -12,13 +12,13 @@ module VergeSpecHelper
 end
 
 describe Verge::Server do
-  include VergeSpecHelper
+  include ServerSpecHelper
 
   before :each do
     @site = Factory(:site)
     header("Referer", @site.host)
   end
-  
+
   describe "GET to /token.js" do
     it "echos cookie back in javascript" do
       login = "astro"

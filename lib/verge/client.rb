@@ -1,7 +1,7 @@
 module Verge
   module Client
     class << self
-      attr_accessor :server_url
+      attr_accessor :server_url, :site_token
     end
 
     module AssetHelper

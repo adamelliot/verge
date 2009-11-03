@@ -6,7 +6,7 @@ require 'dm-timestamps'
 
 require 'activesupport'
 
-DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3:///#{Dir.pwd}/database.sqlite3")
+DataMapper::setup(:default, ENV['DATABASE_URL'] || Verge::Server::Config.database_path)
 
 module Verge
   module Server
@@ -101,7 +101,15 @@ module Verge
       end
     end
 
+    # Datastructure representing a site that will connect and authenticate
+    # against verge. If you've setup verge with just one generic site key
+    # none of your sites will need to specify who they are and should
+    # all share that common key.
     class Site
+      # Set a value that will be used to look up keys that are not associated
+      # with a particular site
+      GENERIC_HOST = "== GENERIC =="
+      
       include DataMapper::Resource
 
       property :id,         Serial, :key => true
