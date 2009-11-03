@@ -108,7 +108,7 @@ module Verge
     class Site
       # Set a value that will be used to look up keys that are not associated
       # with a particular site
-      GENERIC_HOST = "== GENERIC =="
+      GENERIC_HOST = "generic.hostname"
       
       include DataMapper::Resource
 

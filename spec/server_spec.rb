@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 module ServerSpecHelper
-  def valid_auth_request(user, redirect = "", site = "")
+  def valid_auth_request(user, redirect = nil, site = nil)
     {:login => user.login, :password => "0rbital", :redirect => redirect, :site => site}
   end
   
@@ -15,8 +15,8 @@ describe Verge::Server do
   include ServerSpecHelper
 
   before :each do
-    @site = Factory(:site)
-    header("Referer", @site.host)
+    Verge::Server::Site.all.destroy!
+    @site = Factory(:generic_site)
   end
 
   describe "GET to /token.js" do
@@ -99,8 +99,7 @@ describe Verge::Server do
     end
     
     it "fails if site not found" do
-      header("Referer", "BAD://SITE")
-      post '/create'
+      post '/create', {:site => "bad.site"}
 
       last_response.status.should == 401
     end
@@ -116,13 +115,10 @@ describe Verge::Server do
     before :each do
       @user = Factory(:user)
       @signed_token = @user.token.signed_tokens.first(:site_id => @site.id)
-      
-      header("Referer", @site.host)
     end
  
     it "fails if no regisered site is found" do
-      header("Referer", "BAD://SITE")
-      get "/verify/anything"
+      get "/verify/anything", {:site => "bad.site"}
 
       last_response.status.should == 401
     end

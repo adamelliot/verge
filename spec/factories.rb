@@ -10,6 +10,10 @@ Factory.define(:site, :class => Verge::Server::Site) do |s|
   s.host { Factory.next(:host) }
 end
 
+Factory.define(:generic_site, :class => Verge::Server::Site) do |site|
+  site.host Verge::Server::Site::GENERIC_HOST
+end
+
 Factory.define(:signed_token, :class => Verge::Server::SignedToken) do |s|
   s.token_id 1
   s.site_id 1
