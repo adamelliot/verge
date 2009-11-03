@@ -18,6 +18,8 @@ begin
     gem.add_development_dependency "factory_girl"
     gem.add_development_dependency "rack-test", ">= 0.5.0"
     gem.add_development_dependency "do_sqlite3", ">= 0.9.0"
+    
+    gem.executables = ['verge']
   end
   Jeweler::GemcutterTasks.new
 #  Jeweler::RubyforgeTasks.new do |rubyforge|
