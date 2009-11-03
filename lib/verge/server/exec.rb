@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'optparse'
 require 'yaml'
 
@@ -10,8 +11,8 @@ module Verge
         database = nil
         signature_file = nil
 
-        OptionsParser.new do |opts|
-          opts.banner "Usage: verge [options]"
+        OptionParser.new do |opts|
+          opts.banner { "Usage: verge [options]" }
           # Sinatra params
           opts.on('-x')         {       options[:lock] = true }
           opts.on('-s server')  { |val| options[:server] = val }

@@ -9,9 +9,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Adam Elliot"]
-  s.date = %q{2009-10-29}
+  s.date = %q{2009-11-02}
+  s.default_executable = %q{verge}
   s.description = %q{Simple system that grants trusted sites tokens if users have successfully authenticated. So they are free to interact with each other securely.}
   s.email = %q{adam@wartube.com}
+  s.executables = ["verge"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -24,18 +26,24 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/verge.rb",
-     "lib/verge/client/base.rb",
+     "lib/verge/client.rb",
      "lib/verge/crypto.rb",
      "lib/verge/server/base.rb",
+     "lib/verge/server/config.rb",
+     "lib/verge/server/exec.rb",
      "lib/verge/server/models.rb",
      "lib/verge/server/views/token.js.erb",
+     "spec/client_spec.rb",
      "spec/crypto_spec.rb",
      "spec/factories.rb",
      "spec/models_spec.rb",
      "spec/rcov.opts",
+     "spec/server_config_spec.rb",
+     "spec/server_exec_spec.rb",
+     "spec/server_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/verge_spec.rb"
+     "verge.gemspec"
   ]
   s.homepage = %q{http://github.com/adamelliot/verge}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -43,11 +51,14 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Lightweight centralized authentication system built on Sinatra}
   s.test_files = [
-    "spec/crypto_spec.rb",
+    "spec/client_spec.rb",
+     "spec/crypto_spec.rb",
      "spec/factories.rb",
      "spec/models_spec.rb",
-     "spec/spec_helper.rb",
-     "spec/verge_spec.rb"
+     "spec/server_config_spec.rb",
+     "spec/server_exec_spec.rb",
+     "spec/server_spec.rb",
+     "spec/spec_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -60,7 +71,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<bcrypt-ruby>, [">= 2.0.5"])
       s.add_runtime_dependency(%q<activesupport>, [">= 2.3.4"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_development_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_development_dependency(%q<factory_girl>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0.5.0"])
       s.add_development_dependency(%q<do_sqlite3>, [">= 0.9.0"])
     else
@@ -69,7 +80,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bcrypt-ruby>, [">= 2.0.5"])
       s.add_dependency(%q<activesupport>, [">= 2.3.4"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_dependency(%q<factory_girl>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0.5.0"])
       s.add_dependency(%q<do_sqlite3>, [">= 0.9.0"])
     end
@@ -79,7 +90,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bcrypt-ruby>, [">= 2.0.5"])
     s.add_dependency(%q<activesupport>, [">= 2.3.4"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
-    s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+    s.add_dependency(%q<factory_girl>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0.5.0"])
     s.add_dependency(%q<do_sqlite3>, [">= 0.9.0"])
   end
